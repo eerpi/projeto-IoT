@@ -8,12 +8,13 @@ Integrantes
 - Lucas -
 
 Sobre o projeto
-O projeto foi desenvolvido para resolver uma dor da faculdade. Eu e meu grupo desenvolvemos um monitoramento de filas
-para mostrar a quantidade de pessoas em tempo real e classificar o status como alta, média ou baixa.
-Assim, os estudantes não perdem tempo indo até o estabelecimento para descobrir se tem fila
-sendo necessário apenas verificar no aplicativo antes de sair.
+
+O projeto foi desenvolvido para resolver uma dor da faculdade. Eu e meu grupo desenvolvemos um monitoramento de filas para mostrar a quantidade de pessoas em tempo real e classificar o status como alta, média ou baixa.
+
+Assim, os estudantes não perdem tempo indo até o estabelecimento para descobrir se tem fila, sendo necessário apenas verificar no aplicativo antes de sair.
 
 Funcionamento
+
 Usamos 2 sensores ultrassônicos para contar entradas e saídas das pessoas.
 
 1 buzzer que ativa quando a fila está lotada.
