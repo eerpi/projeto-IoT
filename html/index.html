@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monitor RU</title>
+
+    <style>
+
+        body {
+            font-family: Arial;
+            background: #f5f0ff;
+            text-align: center;
+            margin: 0;
+        }
+
+        header {
+            background: #8644ff;
+            color: white;
+            padding: 20px;
+        }
+
+        main {
+            margin-top: 30px;
+        }
+
+        section {
+            background: white;
+            width: 300px;
+            margin: 20px auto;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+        }
+
+        input {
+            font-size: 20px;
+            text-align: center;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>Monitor RU</h1>
+    </header>
+
+    <main>
+
+        <section>
+
+            <h2>Pessoas na fila</h2>
+
+            <input type="text" id="fila" value="0" readonly>
+
+        </section>
+
+        <section>
+
+            <h2>Estado da fila</h2>
+
+            <input type="text" id="estado" value="Aguardando..." readonly>
+
+        </section>
+
+    </main>
+
+    <!-- MQTT -->
+    <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
+
+    <script>
+
+        // Conexão MQTT
+        const client = mqtt.connect('wss://broker.emqx.io:8084/mqtt');
+
+        // Quando conectar
+        client.on('connect', () => {
+
+            console.log("Conectado MQTT");
+
+            client.subscribe('fila/pessoas');
+            client.subscribe('fila/status');
+        });
+
+        // Recebe mensagens
+        client.on('message', (topic, message) => {
+
+            let valor = message.toString();
+
+            console.log(topic + ": " + valor);
+
+            // Pessoas
+            if(topic === "fila/pessoas") {
+
+                document.getElementById("fila").value = valor;
+            }
+
+            // Estado
+            if(topic === "fila/status") {
+
+                document.getElementById("estado").value = valor;
+
+                // Muda cor
+                if(valor === "Baixa") {
+
+                    document.getElementById("estado").style.background = "lightgreen";
+                }
+
+                else if(valor === "Media") {
+
+                    document.getElementById("estado").style.background = "yellow";
+                }
+
+                else {
+
+                    document.getElementById("estado").style.background = "red";
+                    document.getElementById("estado").style.color = "white";
+                }
+            }
+
+        });
+
+    </script>
+
+</body>
+
+</html>
